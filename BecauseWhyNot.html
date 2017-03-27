@@ -1,0 +1,61 @@
+<html>
+	<meta charset="UTF-8">
+    <script src="js/gl_bootstrap.js"></script>
+	<script src="js/loadable_content.js"></script>
+	<script src="js/gl_classes.js"></script>
+	<script src="js/gl_caches.js"></script>
+	<script src="js/thirdparty/sylvester.js"></script>
+	<script src="js/thirdparty/glUtils.js"></script>
+
+	<script language="JavaScript">
+
+		let positionAttrib;
+		let shaderProgram;
+		let mesh;
+		let renderable;
+		function launch() {
+			let engineProjectFiles = [
+				"testProject"
+			];
+
+			start_gl();
+
+			if (!gl) {
+				console.log("GL DIDN'T LOAD!!! D8");
+			}
+
+			// let vshader = GetVertexShader("simple_color");
+			// let fshader = GetFragmentShader("simple_color");
+			shaderProgram = GetShaderProgram("simple_color", "simple_color");
+
+			mesh = GetMesh("unit_plane", "obj");
+
+			renderable = new Renderable(mesh, shaderProgram);
+
+			renderable.promise.then(()=> {
+				//setInterval(hackDrawScene, 15);
+				hackDrawScene();
+			});
+		}
+
+		let idMatrix = Matrix.I(4);
+		let mvMatrix = Matrix.I(4);
+
+		function hackDrawScene() {
+			gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+
+			shaderProgram.bind();
+			shaderProgram.projectionMatrix = idMatrix;
+			shaderProgram.modelviewMatrix = mvMatrix;
+
+			renderable.render();
+		}
+	</script>
+
+    <body onload="launch()">
+		<canvas id="glCanvas" width="640" height="480">
+			Your browser does not appear to support WebGL. This is sad, and you should be sad. It would be the
+			<code>&lt;canvas&gt;</code> element, fwiw.
+		</canvas>
+	</body>
+</html>

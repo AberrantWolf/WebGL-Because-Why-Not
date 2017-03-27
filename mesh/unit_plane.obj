@@ -1,0 +1,16 @@
+# Here is a comment
+# vertex data
+v -0.5 -0.5 0.0
+v -0.5 0.5 0.0
+v 0.5 0.5 0.0
+v 0.5 -0.5 0.0
+
+# texture UVs
+vt 0 0 1
+vt 0 1 1
+vt 1 1 1
+vt 1 0 1
+
+# Face data
+f 1 2 3
+f 3 4 1
